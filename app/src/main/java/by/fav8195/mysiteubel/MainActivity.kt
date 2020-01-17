@@ -20,20 +20,24 @@ import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
 import kotlinx.android.synthetic.main.content_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    //private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var appBarConfiguration: AppBarConfiguration//?
     //-fav
     var networkAvailable = false
     lateinit var mWebView : WebView
+    lateinit var drawerLayout: DrawerLayout
     //fav-
 
     //При создании
@@ -69,16 +73,43 @@ class MainActivity : AppCompatActivity() {
         webView.webViewClient= WebViewClient()
         webView.loadUrl(url)
 */
+        val urlFeedback = getString(R.string.website_urlFeedBack)//адрес страницы ОС
         //fav-
 
 
         val fab: FloatingActionButton = findViewById(R.id.fab)
+
+        //-fav
+        //Слушатель кнопки обратной связи
+        fab.setOnClickListener {
+            loadWebSite(mWebView,urlFeedback,applicationContext)
+        }
+
+        //-fav
+
+/*
+        //Исходный слушатель кнопки ОС, открывающий снек панель снизу
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Типа улетело письмо ;)", Snackbar.LENGTH_LONG)
+            Snackbar.make(view, "Типа улетело письмо... ;)", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+*/
+
+        //-fav
+        //val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)//переобъявлена выше
+        drawerLayout = findViewById(R.id.drawer_layout)//привязка файла макета
         val navView: NavigationView = findViewById(R.id.nav_view)
+
+        //гамбургер
+        val toggle = ActionBarDrawerToggle(
+            this,drawerLayout,R.string.navigation_drawer_open,R.string.navigation_drawer_close
+        ) //создание переключателя
+        //связка переключателя с панелью навигации
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        navView.setNavigationItemSelectedListener(this)
+        //fav-
 
     }
 
@@ -95,13 +126,6 @@ class MainActivity : AppCompatActivity() {
         } else {
             wvGone(mWebView)
         }
-    }
-
-    //При создании меню
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main, menu)
-        return true
     }
 
     //-fav
@@ -201,6 +225,51 @@ class MainActivity : AppCompatActivity() {
             onLoadComplete()
         }
     }
+    //При создании меню
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.main, menu)
+        return true
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+            R.id.nav_home -> {
+                val url = getString(R.string.website_url)
+                loadWebSite(mWebView, url, applicationContext)
+            }
+            R.id.nav_at -> {
+                val url = getString(R.string.website_at)
+                loadWebSite(mWebView, url, applicationContext)
+            }
+            R.id.nav_kotlin -> {
+                val url = getString(R.string.website_kotlin)
+                loadWebSite(mWebView, url, applicationContext)
+            }
+            R.id.nav_java -> {
+                val url = getString(R.string.website_java)
+                loadWebSite(mWebView, url, applicationContext)
+            }
+            R.id.nav_android -> {
+                val url = getString(R.string.website_android)
+                loadWebSite(mWebView, url, applicationContext)
+            }
+            R.id.nav_video -> {
+                val url = getString(R.string.website_video)
+                loadWebSite(mWebView, url, applicationContext)
+            }
+        }
+        drawerLayout.closeDrawer(GravityCompat.START)
+        return true
+    }
     //fav-
 
+
+/*
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_home)
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+*/
 }
