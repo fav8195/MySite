@@ -33,7 +33,7 @@ import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    private lateinit var appBarConfiguration: AppBarConfiguration//?
+    //private lateinit var appBarConfiguration: AppBarConfiguration//?
     //-fav
     var networkAvailable = false
     lateinit var mWebView : WebView
@@ -49,6 +49,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         //fav
         var url = getString(R.string.website_url)
+        //адрес страницы ОС
+        val urlFeedback = getString(R.string.website_urlFeedBack)
 
         mWebView = findViewById(R.id.webView)
         val webSettings = mWebView.settings
@@ -73,7 +75,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         webView.webViewClient= WebViewClient()
         webView.loadUrl(url)
 */
-        val urlFeedback = getString(R.string.website_urlFeedBack)//адрес страницы ОС
+
         //fav-
 
 
@@ -102,7 +104,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         //гамбургер
         val toggle = ActionBarDrawerToggle(
-            this,drawerLayout,R.string.navigation_drawer_open,R.string.navigation_drawer_close
+            this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
         ) //создание переключателя
         //связка переключателя с панелью навигации
         drawerLayout.addDrawerListener(toggle)
