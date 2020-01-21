@@ -1,6 +1,7 @@
 package by.fav8195.mysiteubel
 
 import android.annotation.TargetApi
+import android.app.Notification
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
@@ -75,7 +76,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         webView.webViewClient= WebViewClient()
         webView.loadUrl(url)
 */
-
         //fav-
 
 
@@ -88,6 +88,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         //-fav
+
 
 /*
         //Исходный слушатель кнопки ОС, открывающий снек панель снизу
@@ -114,6 +115,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         //fav-
 
     }
+
+/*
+    public fun onClickButtSett() {
+        val urlSett = getString(R.string.website_urlFeedBack)
+        loadWebSite(mWebView, urlSett,applicationContext )
+    }
+*/
 
     //Загрузка страницы
     private fun loadWebSite(mWebView: WebView, url: String, context: Context) {
@@ -192,7 +200,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             networkAvailable = isNetworkAvailable(applicationContext)
 
             if (networkAvailable) {
-                if (Uri.parse(url).host == getString(R.string.website_domain)) return false
+                if ((Uri.parse(url).host == getString(R.string.website_domain)) || (Uri.parse(url).host == getString(R.string.website_domain_personalArea))) return false
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                 startActivity(intent)
                 onLoadComplete()
@@ -241,24 +249,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val url = getString(R.string.website_url)
                 loadWebSite(mWebView, url, applicationContext)
             }
-            R.id.nav_at -> {
-                val url = getString(R.string.website_at)
+            R.id.nav_cat -> {
+                val url = getString(R.string.website_cat)
                 loadWebSite(mWebView, url, applicationContext)
             }
-            R.id.nav_kotlin -> {
-                val url = getString(R.string.website_kotlin)
+            R.id.nav_partner -> {
+                val url = getString(R.string.website_menu_partner)
                 loadWebSite(mWebView, url, applicationContext)
             }
-            R.id.nav_java -> {
-                val url = getString(R.string.website_java)
+            R.id.nav_personalArea -> {
+                val url = getString(R.string.website_personalArea)
                 loadWebSite(mWebView, url, applicationContext)
             }
-            R.id.nav_android -> {
-                val url = getString(R.string.website_android)
+            R.id.nav_info -> {
+                val url = getString(R.string.website_info)
                 loadWebSite(mWebView, url, applicationContext)
             }
-            R.id.nav_video -> {
-                val url = getString(R.string.website_video)
+            R.id.nav_about -> {
+                val url = getString(R.string.website_about)
                 loadWebSite(mWebView, url, applicationContext)
             }
         }
