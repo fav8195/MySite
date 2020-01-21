@@ -1,8 +1,38 @@
+//-fav Плагин OneSignal должен быть в самом начале!
+apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+
+//библиотека опевещения
+buildscript {
+
+    repositories {
+
+        maven { url 'https://plugins.gradle.org/m2/'}
+
+    }
+
+    dependencies {
+
+        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.12.4, 0.99.99]'
+
+    }
+
+}
+
+
+repositories {
+
+    maven { url 'https://maven.google.com' }
+
+}
+
+//fav-
+
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
+
 
 android {
     compileSdkVersion 29
@@ -14,6 +44,14 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        //-fav параметр для OneSignal
+        manifestPlaceholders = [
+                onesignal_app_id: '631df396-9b62-40f4-83c5-ed71eb1ee302',
+                // Project number pulled from dashboard, local value is ignored. вверху вставлен ИД проекта
+                onesignal_google_project_number: 'REMOTE'
+        ]
+        //fav-
+
     }
     buildTypes {
         release {
@@ -38,4 +76,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    //-fav библтотека OneSignal
+    implementation 'com.onesignal:OneSignal:[3.11.2, 3.99.99]'
+    //fav-
 }
